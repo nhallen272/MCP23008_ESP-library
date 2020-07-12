@@ -39,11 +39,50 @@
 #elif defined(ESP8266)
 #include <pgmspace.h>
 #endif
-#include "Adafruit_MCP23008.h"
+#include "Adafruit_MCP23008_ESP.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // RTC_DS1307 implementation
+void Adafruit_MCP23008::begin(uint8_t addr, uint8_t sda, uint8_t scl) 
+{
+  if (addr > 7)
+  {
+    addr = 7;
+  }
+  i2caddr = addr;
 
+  Wire.begin(sda, scl);
+
+  // set defaults!
+  Wire.beginTransmission(MCP23008_ADDRESS | i2caddr);
+#if ARDUINO >= 100
+  Wire.write((byte)MCP23008_IODIR);
+  Wire.write((byte)0xFF); // all inputs
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+  Wire.write((byte)0x00);
+#else
+  Wire.send(MCP23008_IODIR);
+  Wire.send(0xFF); // all inputs
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+  Wire.send(0x00);
+#endif
+  Wire.endTransmission();
+
+}
 void Adafruit_MCP23008::begin(uint8_t addr) {
   if (addr > 7) {
     addr = 7;

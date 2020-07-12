@@ -17,13 +17,19 @@
  */
 class Adafruit_MCP23008 {
 public:
+  /*
+   * @brief Begins i2c connection with specified address, SDA, and SCl pins. 
+   * Must specify these pins for the ESP32
+   * @param address, and SDA, SCL pins
+   */
+  void begin(uint8_t addr, uint8_t sda, uint8_t scl);
   /*!
-   * @brief Begins the i2c connection using specified address
+   * @brief Begins the i2c connection using specified address and default arduino sda/scl pins
    * @param addr i2c address of the MCP23008
    */
   void begin(uint8_t addr);
   /*!
-   * @brief Begins the i2c connection using default address
+   * @brief Begins the i2c connection using default address and default arduino sda/scl pins
    */
   void begin(void);
 

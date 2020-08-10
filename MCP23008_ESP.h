@@ -17,22 +17,31 @@
  */
 class Adafruit_MCP23008 {
 public:
+  //Constructor
+  Adafruit_MCP23008();
+  
+  /*
+   * @brief Begins i2c connection through TwoWire with specified address, SDA, and SCl pins. 
+   
+   * @param TwoWireInstance, address, and SDA, SCL pins
+   */
+  void begin(uint8_t addr, uint8_t sda, uint8_t scl);
   /*
    * @brief Begins i2c connection with specified address, SDA, and SCl pins. 
    * Must specify these pins for the ESP32
    * @param address, and SDA, SCL pins
-   */
-  void begin(uint8_t addr, uint8_t sda, uint8_t scl);
-  /*!
+   
+  //void begin(uint8_t addr, uint8_t sda, uint8_t scl);
+  
    * @brief Begins the i2c connection using specified address and default arduino sda/scl pins
    * @param addr i2c address of the MCP23008
-   */
-  void begin(uint8_t addr);
-  /*!
+   
+  //void begin(uint8_t addr);
+  
    * @brief Begins the i2c connection using default address and default arduino sda/scl pins
-   */
-  void begin(void);
-
+   
+  //void begin(void);
+  */
   /*!
    * @brief Sets the pin mode
    * @param p Mode to set
@@ -70,8 +79,11 @@ public:
 
 private:
   uint8_t i2caddr;
+  //TwoWire& TwoWireI2C;
   uint8_t read8(uint8_t addr);
   void write8(uint8_t addr, uint8_t data);
+  
+  bool isTwoWire = false;
 };
 
 #define MCP23008_ADDRESS 0x20 //!< MCP23008 serial address
